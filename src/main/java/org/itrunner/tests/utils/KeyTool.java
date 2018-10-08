@@ -14,7 +14,7 @@ import static org.apache.commons.codec.binary.Base64.encodeBase64String;
 import static org.bouncycastle.jce.provider.BouncyCastleProvider.PROVIDER_NAME;
 
 public class KeyTool {
-    private static final String KEY_STRING = "b2qZDg+KRU54pyYpzm0kwQ==";
+    private static final String KEY_STRING = "8uUYQDFullVnCLAJj2XbfQ==";
     private static final String CIPHER = "AES";
 
     private KeyTool() {
@@ -26,7 +26,7 @@ public class KeyTool {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(encrypt("123@welcome"));
+        System.out.println(encrypt("123456"));
     }
 
     private static String encrypt(String password) throws Exception {
