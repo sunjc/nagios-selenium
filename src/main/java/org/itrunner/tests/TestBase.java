@@ -25,17 +25,17 @@ public abstract class TestBase {
 
     private long startTime;
 
-    protected TestResult result = new TestResult();
+    private TestResult result = new TestResult();
 
     @Before
     public void setup() {
         startTime = currentTimeMillis();
-        nextStep(() -> createDriver(), "init");
+        nextStep(this::createDriver, "init");
         setTimeout();
         setStopAtShutdown();
     }
 
-    public TestResult run() {
+    TestResult run() {
         setup();
         test();
         tearDown();
@@ -92,17 +92,15 @@ public abstract class TestBase {
         }
     }
 
-    public void open(final String url) {
-        nextStep(() -> {
-            driver.get(url);
-        }, "loading page");
+    protected void open(final String url) {
+        nextStep(() -> driver.get(url), "loading page");
     }
 
     public void click(final By by, String stepName) {
         nextStep(() -> driver.findElement(by).click(), stepName);
     }
 
-    public void waitForTitlePresent(final String title) {
+    protected void waitForTitlePresent(final String title) {
         nextStep(() -> waitForCondition(titleIs(title)), "finding title");
     }
 
