@@ -27,6 +27,7 @@ public class DriverFactory {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setJavascriptEnabled(true);
         capabilities.setCapability(PHANTOMJS_EXECUTABLE_PATH_PROPERTY, CONFIG.getPhantomJsBinaryPath());
+        capabilities.setCapability(PHANTOMJS_GHOSTDRIVER_PATH_PROPERTY, CONFIG.getPhantomJsGhostDriverPath());
 
         List<String> cliArgs = new ArrayList<>();
         cliArgs.add("--web-security=false");

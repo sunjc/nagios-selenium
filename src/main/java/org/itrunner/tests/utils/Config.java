@@ -36,6 +36,10 @@ public enum Config {
         return getProperty("phantomjs.binary.path");
     }
 
+    public String getPhantomJsGhostDriverPath() {
+        return getProperty("phantomjs.ghostdriver.path");
+    }
+
     public String getProxyHost() {
         return getProperty("proxy.host");
     }
