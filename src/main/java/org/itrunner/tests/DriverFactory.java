@@ -17,10 +17,27 @@ import static org.openqa.selenium.phantomjs.PhantomJSDriverService.*;
 public class DriverFactory {
 
     public static RemoteWebDriver createDriver() {
-        if (CONFIG.getDriverType().equals("firefox")) {
-            return createFirefoxDriver();
+        if (CONFIG.getDriverType().equals("phantomjs")) {
+            return createPhantomJSDriver();
         }
-        return createPhantomJSDriver();
+
+        return createFirefoxDriver();
+    }
+
+    public static RemoteWebDriver createFirefoxDriver() {
+        System.setProperty("webdriver.gecko.driver", CONFIG.getGeckoDriver());
+
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        options.setLogLevel(FirefoxDriverLogLevel.fromString(CONFIG.getLogLevel()));
+
+        if (hasProxy()) {
+            options.setProxy(getProxy());
+        }
+
+        RemoteWebDriver driver = new FirefoxDriver(options);
+        driver.manage().window().maximize();
+        return driver;
     }
 
     public static RemoteWebDriver createPhantomJSDriver() {
@@ -42,21 +59,6 @@ public class DriverFactory {
             capabilities.setCapability("proxy", getProxy());
         }
         return new PhantomJSDriver(capabilities);
-    }
-
-    public static RemoteWebDriver createFirefoxDriver() {
-        System.setProperty("webdriver.gecko.driver", CONFIG.getGeckoDriver());
-
-        FirefoxOptions options = new FirefoxOptions();
-        options.setLogLevel(FirefoxDriverLogLevel.fromString(CONFIG.getLogLevel()));
-
-        if (hasProxy()) {
-            options.setProxy(getProxy());
-        }
-
-        RemoteWebDriver driver = new FirefoxDriver(options);
-        driver.manage().window().maximize();
-        return driver;
     }
 
     private static Proxy getProxy() {

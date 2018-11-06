@@ -17,10 +17,10 @@ public class Baidu extends TestBase {
 
         nextStep(() -> {
             driver.findElement(By.linkText("登录")).click();
-            driver.findElementById("TANGRAM__PSP_10__footerULoginBtn").click();
-            driver.findElementById("TANGRAM__PSP_10__userName").sendKeys(CONFIG.getBaiduUsername());
-            driver.findElementById("TANGRAM__PSP_10__password").sendKeys(CONFIG.getBaiduPassword());
-            driver.findElementById("TANGRAM__PSP_10__submit").click();
+            driver.findElement(By.id("TANGRAM__PSP_10__footerULoginBtn")).click();
+            driver.findElement(By.id("TANGRAM__PSP_10__userName")).sendKeys(CONFIG.getBaiduUsername());
+            driver.findElement(By.id("TANGRAM__PSP_10__password")).sendKeys(CONFIG.getBaiduPassword());
+            driver.findElement(By.id("TANGRAM__PSP_10__submit")).click();
             takeScreenshot("baidu");
         }, "login");
     }
