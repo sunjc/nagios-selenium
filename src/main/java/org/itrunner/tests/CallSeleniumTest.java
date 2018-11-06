@@ -24,7 +24,7 @@ public class CallSeleniumTest {
         return seleniumTestClass.newInstance().run();
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         CallSeleniumTest seTest = new CallSeleniumTest();
 
         Option optionClass = new Option("c", "class", true, "full classname of test case (required) e.g. \"org.itrunner.tests.hosts.Baidu\"");
@@ -41,8 +41,8 @@ public class CallSeleniumTest {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
 
-        String output = seTest.NAGIOS_TEXT_UNKNOWN + " - Upps";
-        int nagios = seTest.NAGIOS_UNKNOWN;
+        String output = NAGIOS_TEXT_UNKNOWN + " - Upps";
+        int nagios = NAGIOS_UNKNOWN;
 
         try {
             cmd = parser.parse(seTest.options, args);
@@ -57,22 +57,22 @@ public class CallSeleniumTest {
             }
 
             TestResult result = seTest.runTest(cmd.getOptionValue("c"));
-            output = seTest.NAGIOS_TEXT_OK + " - " + cmd.getOptionValue("c") + " Tests passed - " + result.toString();
-            nagios = seTest.NAGIOS_OK;
+            output = NAGIOS_TEXT_OK + " - " + cmd.getOptionValue("c") + " Tests passed - " + result.toString();
+            nagios = NAGIOS_OK;
 
         } catch (ParseException e) {
-            output = seTest.NAGIOS_TEXT_UNKNOWN + " - Parameter problems: " + e.getMessage();
-            nagios = seTest.NAGIOS_UNKNOWN;
+            output = NAGIOS_TEXT_UNKNOWN + " - Parameter problems: " + e.getMessage();
+            nagios = NAGIOS_UNKNOWN;
             usage(seTest.options);
         } catch (ClassNotFoundException e) {
-            output = seTest.NAGIOS_TEXT_UNKNOWN + " - Test case class: " + e.getMessage() + " not found!";
-            nagios = seTest.NAGIOS_UNKNOWN;
+            output = NAGIOS_TEXT_UNKNOWN + " - Test case class: " + e.getMessage() + " not found!";
+            nagios = NAGIOS_UNKNOWN;
         } catch (TimeoutException | CriticalException e) {
-            output = seTest.NAGIOS_TEXT_CRITICAL + " - Test Failures: " + e.getMessage();
-            nagios = seTest.NAGIOS_CRITICAL;
+            output = NAGIOS_TEXT_CRITICAL + " - Test Failures: " + e.getMessage();
+            nagios = NAGIOS_CRITICAL;
         } catch (Exception e) {
-            output = seTest.NAGIOS_TEXT_WARNING + " - Test Failures: " + processException(cmd, e);
-            nagios = seTest.NAGIOS_WARNING;
+            output = NAGIOS_TEXT_WARNING + " - Test Failures: " + processException(cmd, e);
+            nagios = NAGIOS_WARNING;
         } finally {
             println(output);
             System.exit(nagios); //NOSONAR
@@ -80,7 +80,7 @@ public class CallSeleniumTest {
     }
 
     private static String processException(CommandLine cmd, Exception e) {
-        if (cmd.hasOption("v")) {
+        if (cmd != null && cmd.hasOption("v")) {
             e.printStackTrace(); //NOSONAR
         }
 
