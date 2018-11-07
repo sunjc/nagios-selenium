@@ -12,7 +12,7 @@
     <properties>
         <project.encoding>UTF-8</project.encoding>
         <jdk.version>1.8</jdk.version>
-        <selenium.version>3.141.0</selenium.version>
+        <selenium.version>3.141.5</selenium.version>
     </properties>
 
     <build>
