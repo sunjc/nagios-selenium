@@ -24,6 +24,10 @@ public enum Config {
         return getProperty("driver.type");
     }
 
+    public String getLogFile() {
+        return getProperty("log.file");
+    }
+
     public String getLogLevel() {
         return getProperty("log.level");
     }

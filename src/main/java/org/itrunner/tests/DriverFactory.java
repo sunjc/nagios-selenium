@@ -26,6 +26,7 @@ public class DriverFactory {
 
     public static RemoteWebDriver createFirefoxDriver() {
         System.setProperty("webdriver.gecko.driver", CONFIG.getGeckoDriver());
+        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, CONFIG.getLogFile());
 
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);
@@ -35,9 +36,7 @@ public class DriverFactory {
             options.setProxy(getProxy());
         }
 
-        RemoteWebDriver driver = new FirefoxDriver(options);
-        driver.manage().window().maximize();
-        return driver;
+        return new FirefoxDriver(options);
     }
 
     public static RemoteWebDriver createPhantomJSDriver() {
@@ -53,7 +52,7 @@ public class DriverFactory {
         capabilities.setCapability(PHANTOMJS_CLI_ARGS, cliArgs);
 
         // Control LogLevel for GhostDriver, via CLI arguments
-        String[] ghostDriverCliArgs = {"--logLevel=" + CONFIG.getLogLevel()};
+        String[] ghostDriverCliArgs = {"--logFile=" + CONFIG.getLogFile(), "--logLevel=" + CONFIG.getLogLevel()};
         capabilities.setCapability(PHANTOMJS_GHOSTDRIVER_CLI_ARGS, ghostDriverCliArgs);
         if (hasProxy()) {
             capabilities.setCapability("proxy", getProxy());
