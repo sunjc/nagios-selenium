@@ -15,6 +15,36 @@
         <selenium.version>3.141.5</selenium.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <driver.type>chrome</driver.type>
+                <log.file>chrome.log</log.file>
+                <log.level>FATAL</log.level>
+                <chrome.driver>D:\\work\\chrome\\chromedriver.exe</chrome.driver>
+                <gecko.driver>D:\\work\\gecko\\geckodriver.exe</gecko.driver>
+                <phantomjs.binary.path>D:\\work\\phantomjs\\bin\\phantomjs</phantomjs.binary.path>
+                <phantomjs.ghostdriver.path>D:\\work\\ghostdriver-master\\src\\main.js</phantomjs.ghostdriver.path>
+                <proxy.host/>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <driver.type>chrome</driver.type>
+                <log.file>chrome.log</log.file>
+                <log.level>FATAL</log.level>
+                <chrome.driver>/home/nagios/chrome/chromedriver</chrome.driver>
+                <gecko.driver>/home/nagios/gecko/geckodriver</gecko.driver>
+                <phantomjs.binary.path>/home/nagios/phantomjs/bin/phantomjs</phantomjs.binary.path>
+                <phantomjs.ghostdriver.path>/home/nagios/ghostdriver-master/src/main.js</phantomjs.ghostdriver.path>
+                <proxy.host/>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>

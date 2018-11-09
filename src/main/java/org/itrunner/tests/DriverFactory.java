@@ -1,6 +1,9 @@
 package org.itrunner.tests;
 
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -17,11 +20,33 @@ import static org.openqa.selenium.phantomjs.PhantomJSDriverService.*;
 public class DriverFactory {
 
     public static RemoteWebDriver createDriver() {
-        if (CONFIG.getDriverType().equals("phantomjs")) {
+        String driverType = CONFIG.getDriverType();
+
+        if (driverType.equals("phantomjs")) {
             return createPhantomJSDriver();
         }
 
-        return createFirefoxDriver();
+        if (driverType.equals("firefox")) {
+            return createFirefoxDriver();
+        }
+
+        return createChromeDriver();
+    }
+
+    public static RemoteWebDriver createChromeDriver() {
+        System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, CONFIG.getChromeDriver());
+        System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, CONFIG.getLogFile());
+        System.setProperty(ChromeDriverService.CHROME_DRIVER_VERBOSE_LOG_PROPERTY, "false");
+        System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
+
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+
+        if (hasProxy()) {
+            options.setProxy(getProxy());
+        }
+
+        return new ChromeDriver(options);
     }
 
     public static RemoteWebDriver createFirefoxDriver() {

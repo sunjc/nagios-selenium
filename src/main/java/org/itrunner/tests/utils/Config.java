@@ -32,6 +32,10 @@ public enum Config {
         return getProperty("log.level");
     }
 
+    public String getChromeDriver() {
+        return getProperty("chrome.driver");
+    }
+
     public String getGeckoDriver() {
         return getProperty("gecko.driver");
     }
