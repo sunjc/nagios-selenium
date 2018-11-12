@@ -116,6 +116,10 @@ public abstract class TestBase {
         driver.manage().timeouts().implicitlyWait(CallSeleniumTest.getTimeout(), TimeUnit.SECONDS);
     }
 
+    private void setTotalTime() {
+        result.setTotalTime(currentTimeMillis() - startTime);
+    }
+
     private void addShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread("Selenium Quit Hook") {
             @Override
@@ -123,9 +127,5 @@ public abstract class TestBase {
                 DriverFactory.quit();
             }
         });
-    }
-
-    private void setTotalTime() {
-        result.setTotalTime(currentTimeMillis() - startTime);
     }
 }

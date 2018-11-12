@@ -20,7 +20,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>src/main/resources</directory>
+            <directory>target/classes</directory>
             <outputDirectory>lib</outputDirectory>
             <includes>
                 <include>config.ini</include>
