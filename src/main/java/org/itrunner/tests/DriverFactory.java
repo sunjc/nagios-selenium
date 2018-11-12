@@ -1,16 +1,17 @@
 package org.itrunner.tests;
 
 import org.openqa.selenium.Proxy;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.service.DriverService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,11 @@ import static org.itrunner.tests.utils.Config.CONFIG;
 import static org.openqa.selenium.phantomjs.PhantomJSDriverService.*;
 
 public class DriverFactory {
+    private static DriverService service;
+    private static RemoteWebDriver driver;
+
+    private DriverFactory() {
+    }
 
     public static RemoteWebDriver createDriver() {
         String driverType = CONFIG.getDriverType();
@@ -34,34 +40,52 @@ public class DriverFactory {
     }
 
     public static RemoteWebDriver createChromeDriver() {
-        System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, CONFIG.getChromeDriver());
-        System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, CONFIG.getLogFile());
-        System.setProperty(ChromeDriverService.CHROME_DRIVER_VERBOSE_LOG_PROPERTY, "false");
-        System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
+        try {
+            service = new ChromeDriverService.Builder()
+                    .usingDriverExecutable(new File(CONFIG.getChromeDriver()))
+                    .usingAnyFreePort()
+                    .withSilent(true)
+                    .withVerbose(false)
+                    .withLogFile(new File(CONFIG.getLogFile()))
+                    .build();
+            service.start();
 
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
 
-        if (hasProxy()) {
-            options.setProxy(getProxy());
+            if (hasProxy()) {
+                options.setProxy(getProxy());
+            }
+
+            driver = new RemoteWebDriver(service.getUrl(), options);
+        } catch (Exception e) {
+            // do nothing
         }
-
-        return new ChromeDriver(options);
+        return driver;
     }
 
     public static RemoteWebDriver createFirefoxDriver() {
-        System.setProperty("webdriver.gecko.driver", CONFIG.getGeckoDriver());
-        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, CONFIG.getLogFile());
+        try {
+            service = new GeckoDriverService.Builder()
+                    .usingDriverExecutable(new File(CONFIG.getGeckoDriver()))
+                    .usingAnyFreePort()
+                    .withLogFile(new File(CONFIG.getLogFile()))
+                    .build();
+            service.start();
 
-        FirefoxOptions options = new FirefoxOptions();
-        options.setHeadless(true);
-        options.setLogLevel(FirefoxDriverLogLevel.fromString(CONFIG.getLogLevel()));
+            FirefoxOptions options = new FirefoxOptions();
+            options.setHeadless(true);
+            options.setLogLevel(FirefoxDriverLogLevel.fromString(CONFIG.getLogLevel()));
 
-        if (hasProxy()) {
-            options.setProxy(getProxy());
+            if (hasProxy()) {
+                options.setProxy(getProxy());
+            }
+
+            driver = new RemoteWebDriver(service.getUrl(), options);
+        } catch (Exception e) {
+            // do nothing
         }
-
-        return new FirefoxDriver(options);
+        return driver;
     }
 
     public static RemoteWebDriver createPhantomJSDriver() {
@@ -82,7 +106,19 @@ public class DriverFactory {
         if (hasProxy()) {
             capabilities.setCapability("proxy", getProxy());
         }
-        return new PhantomJSDriver(capabilities);
+        driver = new PhantomJSDriver(capabilities);
+        return driver;
+    }
+
+    public static void quit() {
+        if (driver != null) {
+            driver.quit();
+        }
+        if (service != null) {
+            service.stop();
+        }
+        driver = null;
+        service = null;
     }
 
     private static Proxy getProxy() {

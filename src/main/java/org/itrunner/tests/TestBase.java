@@ -32,7 +32,7 @@ public abstract class TestBase {
         startTime = currentTimeMillis();
         nextStep(this::createDriver, "init");
         setTimeout();
-        setStopAtShutdown();
+        addShutdownHook();
     }
 
     TestResult run() {
@@ -45,7 +45,7 @@ public abstract class TestBase {
 
     @After
     public void tearDown() {
-        nextStep(() -> driver.quit(), "destroy");
+        nextStep(() -> DriverFactory.quit(), "destroy");
     }
 
     private void createDriver() {
@@ -116,11 +116,11 @@ public abstract class TestBase {
         driver.manage().timeouts().implicitlyWait(CallSeleniumTest.getTimeout(), TimeUnit.SECONDS);
     }
 
-    private void setStopAtShutdown() {
+    private void addShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread("Selenium Quit Hook") {
             @Override
             public void run() {
-                driver.quit();
+                DriverFactory.quit();
             }
         });
     }
