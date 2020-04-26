@@ -95,9 +95,9 @@ public class CallSeleniumTest {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("check_selenium", options);
         println("This version of check_selenium was tested with:");
-        println("  - selenium 3.14.0");
-        println("  - selenium ide 3.3.1");
-        println("  - test case exported as Java / JUnit 4 / WebDriver");
+        println("  - selenium 3.141");
+        println("  - selenium ide 3.17");
+        println("  - test case exported as Java JUnit");
         println("Some example calls:");
         println(" ./check_selenium.sh -c \"org.itrunner.tests.hosts.Baidu\"");
         println(" ./check_selenium.sh --class \"org.itrunner.tests.hosts.Baidu\"");

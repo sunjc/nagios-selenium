@@ -1,7 +1,7 @@
 package org.itrunner.tests.hosts;
 
 import org.itrunner.tests.TestBase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
 import static org.itrunner.tests.utils.Config.CONFIG;

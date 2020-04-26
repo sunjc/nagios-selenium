@@ -1,8 +1,8 @@
 package org.itrunner.tests;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -27,7 +27,7 @@ public abstract class TestBase {
 
     private TestResult result = new TestResult();
 
-    @Before
+    @BeforeEach
     public void setup() {
         startTime = currentTimeMillis();
         nextStep(this::createDriver, "init");
@@ -43,7 +43,7 @@ public abstract class TestBase {
         return result;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         nextStep(() -> DriverFactory.quit(), "destroy");
     }
