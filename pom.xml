@@ -17,29 +17,19 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>firefox</id>
             <properties>
-                <driver.type>chrome</driver.type>
-                <log.file>chrome.log</log.file>
-                <log.level>FATAL</log.level>
-                <chrome.driver>D:\\work\\chrome\\chromedriver.exe</chrome.driver>
-                <gecko.driver>D:\\work\\gecko\\geckodriver.exe</gecko.driver>
-                <phantomjs.binary.path>D:\\work\\phantomjs\\bin\\phantomjs</phantomjs.binary.path>
-                <phantomjs.ghostdriver.path>D:\\work\\ghostdriver-master\\src\\main.js</phantomjs.ghostdriver.path>
+                <driver.type>firefox</driver.type>
+                <driver.service.url>http://localhost:8888</driver.service.url>
                 <proxy.host/>
             </properties>
         </profile>
 
         <profile>
-            <id>test</id>
+            <id>chrome</id>
             <properties>
                 <driver.type>chrome</driver.type>
-                <log.file>chrome.log</log.file>
-                <log.level>FATAL</log.level>
-                <chrome.driver>/home/nagios/chrome/chromedriver</chrome.driver>
-                <gecko.driver>/home/nagios/gecko/geckodriver</gecko.driver>
-                <phantomjs.binary.path>/home/nagios/phantomjs/bin/phantomjs</phantomjs.binary.path>
-                <phantomjs.ghostdriver.path>/home/nagios/ghostdriver-master/src/main.js</phantomjs.ghostdriver.path>
+                <driver.service.url>http://localhost:8888</driver.service.url>
                 <proxy.host/>
             </properties>
         </profile>
@@ -127,11 +117,6 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
             <version>${selenium.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.codeborne</groupId>
-            <artifactId>phantomjsdriver</artifactId>
-            <version>1.4.4</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
