@@ -2,17 +2,12 @@ package org.itrunner.tests;
 
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import static org.itrunner.tests.utils.Config.CONFIG;
 
-
 public class DriverFactory {
-    private static final String NONE_PROXY_FLAG = "none";
-    private static final String DEFAULT_PROXY_FLAG = "default";
-    private static final String SIN_PROXY_FLAG = "sin";
 
     private DriverFactory() {
     }
@@ -38,7 +33,6 @@ public class DriverFactory {
     public static RemoteWebDriver createFirefoxDriver() {
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);
-        options.setLogLevel(FirefoxDriverLogLevel.fromString(CONFIG.getLogLevel()));
 
         if (hasProxy()) {
             options.setProxy(getProxy());
