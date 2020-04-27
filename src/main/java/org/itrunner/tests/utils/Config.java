@@ -2,6 +2,8 @@ package org.itrunner.tests.utils;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 public enum Config {
@@ -24,28 +26,16 @@ public enum Config {
         return getProperty("driver.type");
     }
 
-    public String getLogFile() {
-        return getProperty("log.file");
+    public URL getDriverServiceUrl() {
+        try {
+            return new URL(getProperty("driver.service.url"));
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 
     public String getLogLevel() {
         return getProperty("log.level");
-    }
-
-    public String getChromeDriver() {
-        return getProperty("chrome.driver");
-    }
-
-    public String getGeckoDriver() {
-        return getProperty("gecko.driver");
-    }
-
-    public String getPhantomJsBinaryPath() {
-        return getProperty("phantomjs.binary.path");
-    }
-
-    public String getPhantomJsGhostDriverPath() {
-        return getProperty("phantomjs.ghostdriver.path");
     }
 
     public String getProxyHost() {
