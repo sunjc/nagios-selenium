@@ -34,10 +34,6 @@ public enum Config {
         }
     }
 
-    public String getLogLevel() {
-        return getProperty("log.level");
-    }
-
     public String getProxyHost() {
         return getProperty("proxy.host");
     }
