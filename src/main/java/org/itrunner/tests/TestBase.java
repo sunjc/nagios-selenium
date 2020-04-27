@@ -45,11 +45,11 @@ public abstract class TestBase {
 
     @AfterEach
     public void tearDown() {
-        nextStep(() -> DriverFactory.quit(), "destroy");
+        nextStep(() -> driver.quit(), "destroy");
     }
 
     private void createDriver() {
-        driver = DriverFactory.createDriver();
+        driver = DriverFactory.createWebDriver();
     }
 
     public abstract void test();
@@ -124,7 +124,7 @@ public abstract class TestBase {
         Runtime.getRuntime().addShutdownHook(new Thread("Selenium Quit Hook") {
             @Override
             public void run() {
-                DriverFactory.quit();
+                driver.quit();
             }
         });
     }
